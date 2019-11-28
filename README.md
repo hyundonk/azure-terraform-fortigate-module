@@ -15,4 +15,13 @@ The use case scenario includes:
 3. inter-subnet traffic filtering. traffic from frontend subnet to backend subnet is sent to internal Azure Standard Load Balancer which is then filtered at fortigate firewalll instance and then sent to destination subnet. 
 4. The scenarios above can be extended to multiple VNETs environment in hub-and-spoke architecture. 
 
+## terraform configuraiton files structure
+
+
+## Bootstrapping Fortigate instances
+Running Fortigate instance requires license and initial boot straping as described below link.
+https://docs.fortinet.com/vm/azure/fortigate/5.6/deploying-fortigate-on-azure/5.6.0/295297/bootstrapping-the-fortigate-cli-and-byol-license-at-initial-bootup-using-user-data
+
+
+
 ## Tenical Notes
