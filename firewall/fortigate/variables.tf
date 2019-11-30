@@ -43,11 +43,15 @@ variable "ext_nic_ip_offset" {}
 variable "int_nic_ip_offset" {}
 
 variable "extlb_backend_address_pool_id" {
-  description = "backend address pool ID of external IP prefix of external load balancer"
+  description = "backend address pool ID of external load balancer"
 }
 
 variable "extlb_backend_outbound_address_pool_id" {
-  description = "outbound backend address pool ID of external IP prefix of external load balancer"
+  description = "outbound backend address pool ID of external load balancer"
+}
+
+variable "intlb_backend_address_pool_id" {
+  description = "backend address pool ID of internal load balancer"
 }
 
 variable "admin_username" {

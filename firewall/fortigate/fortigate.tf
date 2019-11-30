@@ -135,6 +135,13 @@ resource "azurerm_network_interface_backend_address_pool_association" "extlb_out
 	backend_address_pool_id = var.extlb_backend_outbound_address_pool_id
 }
 
+resource "azurerm_network_interface_backend_address_pool_association" "intlb" {
+	count = var.vm_num
+	
+  network_interface_id    = element(azurerm_network_interface.nic2.*.id, count.index)
+	ip_configuration_name = "ipconfig0"
+	backend_address_pool_id = var.intlb_backend_address_pool_id
+}
 
 /*
 resource "azurerm_network_interface_nat_rule_association" "test" {

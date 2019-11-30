@@ -81,6 +81,7 @@ module "fortigate" {
   
   extlb_backend_address_pool_id             = module.external_load_balancer.backend_address_pool_id
   extlb_backend_outbound_address_pool_id    = module.external_load_balancer.backend_outbound_address_pool_id
+  intlb_backend_address_pool_id             = module.internal_load_balancer.backend_address_pool_id
 }
 
 module "fortimanager" {
