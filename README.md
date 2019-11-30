@@ -43,7 +43,7 @@ $ terraform plan
 # 3. Run "terraform apply" to deploy Fortigate module resources.
 $ terraform apply
 ```
-If you are using azure terraform landing zone launchpad (https://github.com/aztfmod/level0), variables for backend configuration can be retrieved from Azure Keyvault which is created from launchpad. In this case you can use replace "terraform init" step with running "./firewall/terraform_init.sh" script to retrieve and set environmental variables and set terraform variables from the environmental variable.
+If you are using azure terraform landing zone launchpad (https://github.com/aztfmod/level0), variables for backend configuration can be retrieved from Azure Keyvault which is created from launchpad. In this case you can replace "terraform init" step with running "./firewall/terraform_init.sh" script to retrieve and set environmental variables and set terraform variables from the environmental variable.
 ```
 $ . terraform_init.sh
 ```
