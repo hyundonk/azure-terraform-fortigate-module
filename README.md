@@ -64,7 +64,7 @@ Defines terraform backend and set variables
 **./variables.tf** 
 Declare input variables
 
-## ./outputs.tf
+**./outputs.tf** 
 Declare output variables
 
 **./terraform.tfvar** 
