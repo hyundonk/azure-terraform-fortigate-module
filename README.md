@@ -48,7 +48,7 @@ If you are using azure terraform landing zone launchpad (https://github.com/aztf
 $ . terraform_init.sh
 ```
 
-## terraform configuraiton files structure
+## terraform configuration files structure
 **./firewall_services.tf** 
 Deploy the following sub-modules
 - public_ip_address : A set of IP addresses which will be assigned to external Azure Standard Load Balancer frontends and used for inbound connection and creating DNAT rule at fortigate FW. 
