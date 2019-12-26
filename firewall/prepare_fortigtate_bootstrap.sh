@@ -26,7 +26,9 @@ export license_02_file="license-02.lic"
 if [ $exist == "false" ]
 then 
   echo "creating ${container} container"
-  az storage container create --name ${container}
+  az storage container create --name ${container} --public-access blob
+  # try again to make sure it is created
+  az storage container create --name ${container} --public-access blob
 else
   echo "Use existing ${container} container"
 fi
@@ -35,9 +37,10 @@ echo "upload... config file and license files..."
 if [ -e $configfile ]
 then
   az storage blob upload --container-name ${container} --name config/config.txt --file ${configfile}
-  echo "creating URL with SAS key for config file.."
-  config_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name config/config.txt --permissions r --expiry 2022-12-31 --full-uri)
-  echo "${config_url} created successfully"
+  config_url=$(az storage blob url --container-name ${container} --name config/config.txt)
+#  echo "creating URL with SAS key for config file.."
+#  config_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name config/config.txt --permissions r --expiry 2022-12-31 --full-uri)
+  echo "${config_url} uploaded successfully"
 else
   echo "$configfile is missing"
   exit 0
