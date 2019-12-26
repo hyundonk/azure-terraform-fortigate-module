@@ -12,8 +12,8 @@ export location=$(echo ${stg} | jq -r .location) && echo " - location: ${locatio
 export tf_name="${PWD##*/}.tfstate" && echo " - tf_name: ${tf_name}"
 
 export keyvault=$(az resource list --tag kvtfstate=level0 | jq -r .[0].name) && echo " - keyvault_name: ${keyvault}"
-export TF_VAR_lowerlevel_fortigate_adminusername=$(az keyvault secret show -n fortigate-adminusername --vault-name ${keyvault} | jq -r .value)
-export TF_VAR_lowerlevel_fortigate_adminpassword=$(az keyvault secret show -n fortigate-adminpassword --vault-name ${keyvault} | jq -r .value)
+export TF_VAR_fortigate_adminusername=$(az keyvault secret show -n fortigate-adminusername --vault-name ${keyvault} | jq -r .value)
+export TF_VAR_fortigate_adminpassword=$(az keyvault secret show -n fortigate-adminpassword --vault-name ${keyvault} | jq -r .value)
 
 terraform init \
   -reconfigure \

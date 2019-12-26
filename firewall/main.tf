@@ -8,7 +8,7 @@ terraform {
     }
 }
 
-data "terraform_remote_state" "landingzone_vdc_level1" {
+data "terraform_remote_state" "foundation" {
   backend = "azurerm"
   config = {
     storage_account_name  = var.lowerlevel_storage_account_name
@@ -29,19 +29,19 @@ data "terraform_remote_state" "networking" {
 }
 
 locals {
-    prefix                    = data.terraform_remote_state.landingzone_vdc_level1.outputs.prefix
-    tags                      = data.terraform_remote_state.landingzone_vdc_level1.outputs.tags
+    prefix                    = data.terraform_remote_state.foundation.outputs.prefix
+    tags                      = data.terraform_remote_state.foundation.outputs.tags
 
-    location_map              = data.terraform_remote_state.landingzone_vdc_level1.outputs.location_map
-    log_analytics_workspace   = data.terraform_remote_state.landingzone_vdc_level1.outputs.log_analytics_workspace
-    diagnostics_map           = data.terraform_remote_state.landingzone_vdc_level1.outputs.diagnostics_map
-    resource_group_hub_names  = data.terraform_remote_state.landingzone_vdc_level1.outputs.resource_group_hub_names 
+    location_map              = data.terraform_remote_state.foundation.outputs.location_map
+    log_analytics_workspace   = data.terraform_remote_state.foundation.outputs.log_analytics_workspace
+    diagnostics_map           = data.terraform_remote_state.foundation.outputs.diagnostics_map
+    resource_group_hub_names  = data.terraform_remote_state.foundation.outputs.resource_group_hub_names 
     
     public_ip_prefix          = data.terraform_remote_state.networking.outputs.public_ip_prefix
 
     subnet_prefix_map         = data.terraform_remote_state.networking.outputs.subnet_prefix_map
     subnet_ids_map            = data.terraform_remote_state.networking.outputs.subnet_ids_map
 
-    admin_username             = var.lowerlevel_fortigate_adminusername
-    admin_password             = var.lowerlevel_fortigate_adminpassword
+    admin_username             = var.fortigate_adminusername
+    admin_password             = var.fortigate_adminpassword
 }

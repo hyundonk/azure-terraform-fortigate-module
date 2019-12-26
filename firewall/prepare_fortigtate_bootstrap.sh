@@ -17,26 +17,46 @@ export container="fortigate"
 export AZURE_STORAGE_ACCOUNT=${storage_account_name}
 export AZURE_STORAGE_KEY=${access_key}
 
+export exist=$(az storage container exists --name  ${container} | jq .exists)
+
+export configfile="config.txt"
+export license_01_file="license-01.lic"
+export license_02_file="license-02.lic"
+
+if [ $exist == "false" ]
+then 
+  echo "creating ${container} container"
+  az storage container create --name ${container}
+else
+  echo "Use existing ${container} container"
+fi
+
 echo "upload... config file and license files..."
-az storage blob upload --container-name ${container} --name config/config.txt --file config.txt
-az storage blob upload --container-name ${container} --name license/license-01.lic --file license-01.lic
-az storage blob upload --container-name ${container} --name license/license-02.lic --file license-02.lic
+if [ -e $configfile ]
+then
+  az storage blob upload --container-name ${container} --name config/config.txt --file ${configfile}
+  echo "creating URL with SAS key for config file.."
+  config_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name config/config.txt --permissions r --expiry 2022-12-31 --full-uri)
+  echo "${config_url} created successfully"
+else
+  echo "$configfile is missing"
+  exit 0
+fi
 
-echo "creating URL with SAS key for config file.."
-config_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name config/config.txt --permissions r --expiry 2022-12-31 --full-uri)
-echo "${config_url} created successfully"
+if [ -e $license_01_file ]
+then
+  az storage blob upload --container-name ${container} --name license/license-01.lic --file $license_01_file
+  echo "creating URL with SAS key for 1st instance license file.."
+  license_01_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-01.lic --permissions r --expiry 2022-12-31 --full-uri)
+  echo "creating customdata file for 1st instance..."
+  echo -e "{\"config-url\": ${config_url},\n\"license-url\": ${license_01_url}}\n" > customdata-01.txt
+fi
 
-echo "creating URL with SAS key for 1st instance license file.."
-license_01_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-01.lic --permissions r --expiry 2022-12-31 --full-uri)
-
-echo "creating customdata file for 1st instance..."
-echo -e "{\"config-url\": ${config_url},\n\"license-url\": ${license_01_url}}\n" > customdata-01.txt
-
-echo "creating URL with SAS key for 2nd instance license file.."
-license_02_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-02.lic --permissions r --expiry 2022-12-31 --full-uri)
-
-echo "creating customdata file for 2nd instance..."
-echo -e "{\"config-url\": ${config_url},\n\"license-url\": ${license_02_url}}\n" > customdata-02.txt
-
-
-
+if [ -e $license_02_file ]
+then
+  az storage blob upload --container-name ${container} --name license/license-02.lic --file $license_02_file
+  echo "creating URL with SAS key for 2nd instance license file.."
+  license_02_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-02.lic --permissions r --expiry 2022-12-31 --full-uri)
+  echo "creating customdata file for 2nd instance..."
+  echo -e "{\"config-url\": ${config_url},\n\"license-url\": ${license_02_url}}\n" > customdata-02.txt
+fi

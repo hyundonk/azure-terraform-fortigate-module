@@ -1,9 +1,9 @@
 services =   {
   0               = {
-    name          = "serviceA"
+    name          = "svc-a"
     vm_num        = 2
     vm_size       = "Standard_D2s_v3"
-    subnet        = "serviceA-subnet"
+    subnet        = "service-group1"
     subnet_ip_offset  = 10
     vm_publisher      = "Canonical"
     vm_offer          = "UbuntuServer"
@@ -11,36 +11,14 @@ services =   {
     vm_version        = "latest"
   }
   1               = {
-    name          = "serviceB"
+    name          = "svc-b"
     vm_num        = 2
     vm_size       = "Standard_D2s_v3"
-    subnet        = "serviceB-subnet"
+    subnet        = "service-group2"
     subnet_ip_offset  = 10
     vm_publisher      = "Canonical"
     vm_offer          = "UbuntuServer"
     vm_sku            = "16.04.0-LTS"
-    vm_version        = "latest"
-  }
-  2               = {
-    name          = "serviceC"
-    vm_num        = 2
-    vm_size       = "Standard_D2s_v3"
-    subnet        = "serviceC-subnet"
-    subnet_ip_offset  = 20
-    vm_publisher      = "MicrosoftWindowsServer"
-    vm_offer          = "WindowsServer"
-    vm_sku            = "2016-Datacenter"
-    vm_version        = "latest"
-  }
-  3               = {
-    name          = "serviceD"
-    vm_num        = 2
-    vm_size       = "Standard_D2s_v3"
-    subnet        = "serviceD-subnet"
-    subnet_ip_offset  = 30
-    vm_publisher      = "MicrosoftWindowsServer"
-    vm_offer          = "WindowsServer"
-    vm_sku            = "2016-Datacenter"
     vm_version        = "latest"
   }
 }

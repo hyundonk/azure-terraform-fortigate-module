@@ -23,7 +23,7 @@ resource "azurerm_virtual_machine" "fortimanager" {
 		publisher = "fortinet"
 		offer     = "fortinet-fortianalyzer"
 		sku       = "fortinet-fortianalyzer"
-		version   = "6.0.4"
+		version   = "6.0.7"
 	}
 
 	plan {
