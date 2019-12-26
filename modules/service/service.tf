@@ -54,5 +54,9 @@ module "vm" {
   enable_dependency_agent           = var.enable_dependency_agent
 
   lb_backend_address_pool_id        = module.lb.backend_address_pool_id
+
+  dependencies = [
+    module.lb.depended_on,
+  ]
 }
 
