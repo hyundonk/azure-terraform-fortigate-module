@@ -49,8 +49,9 @@ fi
 if [ -e $license_01_file ]
 then
   az storage blob upload --container-name ${container} --name license/license-01.lic --file $license_01_file
-  echo "creating URL with SAS key for 1st instance license file.."
-  license_01_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-01.lic --permissions r --expiry 2022-12-31 --full-uri)
+  license_01_url=$(az storage blob url --container-name ${container} --name license/license-01.lic)
+  #echo "creating URL with SAS key for 1st instance license file.."
+  #license_01_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-01.lic --permissions r --expiry 2022-12-31 --full-uri)
   echo "creating customdata file for 1st instance..."
   echo -e "{\"config-url\": ${config_url},\n\"license-url\": ${license_01_url}}\n" > customdata-01.txt
 fi
@@ -58,8 +59,9 @@ fi
 if [ -e $license_02_file ]
 then
   az storage blob upload --container-name ${container} --name license/license-02.lic --file $license_02_file
-  echo "creating URL with SAS key for 2nd instance license file.."
-  license_02_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-02.lic --permissions r --expiry 2022-12-31 --full-uri)
+  license_02_url=$(az storage blob url --container-name ${container} --name license/license-02.lic)
+  #echo "creating URL with SAS key for 2nd instance license file.."
+  #license_02_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-02.lic --permissions r --expiry 2022-12-31 --full-uri)
   echo "creating customdata file for 2nd instance..."
   echo -e "{\"config-url\": ${config_url},\n\"license-url\": ${license_02_url}}\n" > customdata-02.txt
 fi
