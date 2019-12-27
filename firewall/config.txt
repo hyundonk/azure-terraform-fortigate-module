@@ -1,17 +1,30 @@
+config system probe-response
+    set port 8008
+    set mode http-probe
+end
+
 config system global
     set admin-sport 8443
     set admintimeout 30
     set timezone 60
 end
 
+config system settings
+    set inspection-mode proxy
+    set firewall-session-dirty check-new
+    set default-voip-alg-mode kernel-helper-based
+    set gui-load-balance enable
+    set gui-allow-unnamed-policy enable
+end
+
 config system interface
     edit "port1"
-        set allowaccess ping https ssh http fgfm
+        set allowaccess ping https ssh http fgfm probe-response
         set alias "Untrust"
     next
     edit "port2"
         set mode dhcp
-        set allowaccess ping https ssh snmp http fgfm
+        set allowaccess ping https ssh snmp http fgfm probe-response
         set alias "Trust"
         set defaultgw disable
         set dns-server-override disable
@@ -36,7 +49,14 @@ config router static
     next
 end
 
-
 config system autoupdate schedule
     set status disable
+end
+
+config system autoupdate push-update
+    set status disable
+end
+
+config system session-helper
+    delete 13
 end

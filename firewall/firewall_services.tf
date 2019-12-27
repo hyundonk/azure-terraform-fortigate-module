@@ -56,6 +56,20 @@ module "internal_load_balancer" {
   tags                              = local.tags
 }
 
+module "route_table_to_internal_lb" {
+  source                            = "git://github.com/hyundonk/aztf-module-rt.git"
+
+  name                              = "${local.prefix}-route-to-internal-lb"
+  location                          = local.location_map["region1"]
+  rg                                = local.resource_group_hub_names["resourcegroup_name_firewall"]
+
+  address_prefix                    = "0.0.0.0/0" # Route to Internet
+  next_hop_type                     = "VirtualAppliance"
+	next_hop_in_ip_address            = cidrhost(local.subnet_prefix_map["service-fwint"], var.int_lb_frontend_ip_offset)
+
+  tags                              = local.tags
+}
+
 module "fortigate" {
   source                            = "./fortigate/"
   

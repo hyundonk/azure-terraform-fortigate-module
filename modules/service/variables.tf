@@ -115,3 +115,8 @@ variable "enable_dependency_agent" {
           description = "true to install dependency agent" 
 }
 
+variable "route_table_id" {
+          description = "route table id" 
+          default = null
+}
+
