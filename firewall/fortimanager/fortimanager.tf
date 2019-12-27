@@ -44,7 +44,7 @@ resource "azurerm_virtual_machine" "fortimanager" {
     managed_disk_type     = "Premium_LRS"
     create_option         = "Empty"
     lun                   = 0
-    disk_size_gb          = "1023"
+    disk_size_gb          = "127"
   }
 
 	os_profile {

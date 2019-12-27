@@ -116,6 +116,7 @@ module "fortimanager" {
   admin_password                    = local.admin_password
 }
 
+/*
 module "fortianalyzer" {
   source                            = "./fortianalyzer/"
   
@@ -133,4 +134,4 @@ module "fortianalyzer" {
   admin_username                    = local.admin_username
   admin_password                    = local.admin_password
 }
-
+*/

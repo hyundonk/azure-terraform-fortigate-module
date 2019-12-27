@@ -29,6 +29,12 @@ services_outbound =   {
   }
 }
 
+jumpbox_service   =   {
+  0               = {
+    name          = "jumpbox"
+  }
+}
+ 
 int_lb_frontend_ip_offset = 4 # 1st available IP address in the subnet. First 4 IPs are reserved for management 
 
 ext_nic_ip_offset         = 4 # 1st available IP address in the subnet. First 4 IPs are reserved for management 
@@ -37,7 +43,7 @@ int_nic_ip_offset         = 5 # 2nd available IP address in the subnet
 
 vm_num_fortigate          = 2 # 3
 vm_size_fortigate         = "Standard_F4s"
-vm_size_fortimanager      = "Standard_D2s_v3"
+vm_size_fortimanager      = "Standard_D4s_v3"
 vm_size_fortianalyzer     = "Standard_D2s_v3"
 
 

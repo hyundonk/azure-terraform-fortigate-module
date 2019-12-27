@@ -10,6 +10,8 @@ variable "prefix" {}
 variable "services" {}
 variable "services_outbound" {}
 
+variable "jumpbox_service" {}
+
 variable "ip_addr_diags" {}
 
 variable "vm_num_fortigate" {
