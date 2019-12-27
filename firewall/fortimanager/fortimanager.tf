@@ -57,6 +57,14 @@ resource "azurerm_virtual_machine" "fortimanager" {
     disable_password_authentication = false
   }
 
+  dynamic "boot_diagnostics" {
+    for_each = var.boot_diagnostics_endpoint == null ? [] : ["BootDiagnostics"]
+    content {
+		  enabled               = var.boot_diagnostics_endpoint != null ? true : false
+		  storage_uri           = var.boot_diagnostics_endpoint
+    }
+	}
+
 	network_interface_ids = [azurerm_network_interface.fortimanager.id]
 }
 

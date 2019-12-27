@@ -35,3 +35,7 @@ variable "admin_password" {
 
 }
 
+variable "boot_diagnostics_endpoint" {
+  default = null
+}
+

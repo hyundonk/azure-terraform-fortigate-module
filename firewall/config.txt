@@ -43,7 +43,7 @@ config router static
         set device "port2"
     next
     edit 3
-        set dst 172.18.0.0 255.255.0.0
+        set dst 10.10.0.0 255.255.0.0
         set gateway 10.10.0.65
         set device "port2"
     next
