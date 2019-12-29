@@ -28,8 +28,9 @@ resource "azurerm_lb_probe" "probe" {
     resource_group_name       = azurerm_lb.extlb.resource_group_name
     loadbalancer_id           = azurerm_lb.extlb.id
     name                      = "${azurerm_lb.extlb.name}-probe"
-    protocol                  = "Tcp"
-    port                      = 22
+    protocol                  = "Http"
+    port                      = 8008 
+    request_path              ="/"
 
     interval_in_seconds       = 5
 	  number_of_probes          = 2

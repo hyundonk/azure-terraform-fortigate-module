@@ -1,3 +1,5 @@
+custom_data = "cloud_init.txt"
+
 services =   {
   0               = {
     name          = "svc-a"

@@ -1,5 +1,5 @@
 module "service1" {
-  source                            = "../modules/service"
+  source                            = "./service"
   
   prefix                            = local.prefix
   name                              = var.services[0].name
@@ -37,11 +37,12 @@ module "service1" {
   enable_network_watcher_extension  = false
   enable_dependency_agent           = false
 
-  route_table_id                    = module.route_table_to_internal_lb.id
+#  route_table_id                    = module.route_table_to_internal_lb.id
+  custom_data                       = var.custom_data
 }
 
 module "service2" {
-  source                            = "../modules/service"
+  source                            = "./service"
   
   prefix                            = local.prefix
   name                              = var.services[1].name
@@ -80,6 +81,7 @@ module "service2" {
   enable_dependency_agent           = false
 
   route_table_id                    = module.route_table_to_internal_lb.id
+  custom_data                       = var.custom_data
 }
 
 module "jumpbox_public_ip" {
