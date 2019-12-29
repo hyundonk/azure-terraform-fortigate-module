@@ -48,7 +48,7 @@ If you are using azure terraform landing zone launchpad (https://github.com/aztf
 $ . terraform_init.sh
 ```
 
-## terraform configuration files structure
+## terraform configuration files for fortigate deployment
 **./firewall_services.tf** 
 Deploy the following sub-modules
 - public_ip_address : A set of IP addresses which will be assigned to external Azure Standard Load Balancer frontends and used for inbound connection and creating DNAT rule at fortigate FW. 
@@ -98,6 +98,15 @@ If you want to re-do cloud-init on already running fortigate VM, use the command
 ```
 # exec factoryreset
 ```
+
+## terraform configuration files for web server VMs deployment
+
+**./variables.tf** 
+Declare input variables
+
+**./outputs.tf** 
+Declare output variables
+
 
 
 ## Tenical Notes
