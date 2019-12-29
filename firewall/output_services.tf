@@ -1,9 +1,8 @@
 
-output "service1" {
-  value = module.service1
-}
-
 output "jumpbox_public_ip" {
-  value = module.jumpbox_public_ip.public_ip
+  value = {
+    for ip in module.jumpbox_public_ip.public_ip:
+       ip.name => ip.ip_address
+  }
 }
 

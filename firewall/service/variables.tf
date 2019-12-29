@@ -1,9 +1,28 @@
+variable "service" {
+  description = "service object"
+  type = object({
+    name              = string
+    vm_num            = number
+    vm_size           = string
+    subnet            = string
+    subnet_ip_offset  = number
+    vm_publisher      = string
+    vm_offer          = string
+    vm_sku            = string
+    vm_version        = string
+  })
+}
+
 variable "prefix" {
   description = "(Required) prefix name"   
 }
 
-variable "name" {
-  description = "(Required) service (middle) name"   
+variable "subnet_ids_map" {
+  description = "map of subnet ids"
+}
+
+variable "subnet_prefix_map" {
+  description = "map of subnet prefixes"
 }
 
 variable "location" {
@@ -19,64 +38,9 @@ variable "tags" {
   
 }
 
-variable "load_balancer_sku" {
-  description = "(Required) load balancer sku. Standard or Basic"
-}
-
-variable "subnet_prefix" {
-  description = "subnet prefix"
-}
-
-variable "subnet_ip_offset" {
-  description = "ip offset in subnet for internal load balancer frontend IP address"
-}
-
-variable "subnet_id" {
-  description = "subnet ID for the internal load balancer"
-}
-
-variable "load_balancer_probe_protocol" {
-  description = "probe protocol. Http, Https, or Tcp"
-  default   = "Tcp"
-}
-
-variable "load_balancer_probe_port" {
-  description = "probe port. (1 ~ 65535)"
-  default   = "22"
-}
-
-variable "load_balancer_probe_interval" {
-  description = "probe interval in sec."
-  default   = "5"
-}
-
-variable "load_balancer_number_of_probes" {
-  description = "number of probes"
-  default   = "2"
-}
-
-variable "vm_num" {
-          description = "Number of VMs to create"        
-}
-
-variable "vm_size" {
-          description = "VM size"
-}
-
-variable "vm_publisher" {
-            default = "MicrosoftWindowsServer"
-}
-
-variable "vm_offer" {
-            default = "WindowsServer"
-}
-
-variable "vm_sku" {
-            default = "2016-Datacenter"
-}
-
-variable "vm_version" {
-            default = "latest"
+variable "load_balancer_param" {
+  description = "load balancer parameters"
+  default = null
 }
 
 variable "admin_username" {
@@ -113,11 +77,13 @@ variable "log_analytics_workspace_key"  {
 }       
 
 variable "enable_network_watcher_extension" {
-          description = "true to install network watcher extension" 
+  description = "true to install network watcher extension" 
+  default     = false
 }
 
 variable "enable_dependency_agent" {
-          description = "true to install dependency agent" 
+  description = "true to install dependency agent" 
+  default     = false
 }
 
 variable "route_table_id" {

@@ -1,43 +1,23 @@
-module "lb" {
-  source                            = "git://github.com/hyundonk/aztf-module-lb.git"
-
-  name                              = "${var.prefix}-${var.name}"
-  location                          = var.location
-  rg                                = var.rg
-
-  tags                              = var.tags
-  sku                               = var.load_balancer_sku
-
-  subnet_id                         = var.subnet_id
-  subnet_prefix                     = var.subnet_prefix
-  subnet_ip_offset                  = var.subnet_ip_offset
-
-  protocol                          = var.load_balancer_probe_protocol
-  port                              = var.load_balancer_probe_port
-  interval                          = var.load_balancer_probe_interval
-  number_of_probes                  = var.load_balancer_number_of_probes
-}
-
 module "vm" {
   source                            = "git://github.com/hyundonk/aztf-module-vm.git"
 
   prefix                            = var.prefix
 
-  vm_num                            = 2
-  vm_name                           = var.name
-  vm_size                           = "Standard_D2s_v3"
+  vm_num                            = var.service.vm_num
+  vm_name                           = var.service.name
+  vm_size                           = var.service.vm_size
 
-  vm_publisher                      = "Canonical"
-  vm_offer                          = "UbuntuServer"
-  vm_sku                            = "16.04.0-LTS"
-  vm_version                        = "latest"
+  vm_publisher                      = var.service.vm_publisher
+  vm_offer                          = var.service.vm_offer
+  vm_sku                            = var.service.vm_sku
+  vm_version                        = var.service.vm_version
 
   location                          = var.location
   resource_group_name               = var.rg
 
-  subnet_id                         = var.subnet_id
-  subnet_prefix                     = var.subnet_prefix
-  subnet_ip_offset                  = var.subnet_ip_offset + 1
+  subnet_id                         = var.subnet_ids_map[var.service.subnet]
+  subnet_prefix                     = var.subnet_prefix_map[var.service.subnet]
+  subnet_ip_offset                  = var.service.subnet_ip_offset
 
   admin_username                    = var.admin_username
   admin_password                    = var.admin_password
@@ -53,14 +33,12 @@ module "vm" {
   enable_network_watcher_extension  = var.enable_network_watcher_extension
   enable_dependency_agent           = var.enable_dependency_agent
 
-  lb_backend_address_pool_id        = module.lb.backend_address_pool_id
-
+  load_balancer_param              = var.load_balancer_param
   custom_data                       = var.custom_data
 }
 
 resource "azurerm_subnet_route_table_association" "association" {
   count           = var.route_table_id == null ? 0 : 1 
-  subnet_id       = var.subnet_id
+  subnet_id       = var.subnet_ids_map[var.service.subnet]
   route_table_id  = var.route_table_id
 }
-

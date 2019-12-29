@@ -1,5 +1,14 @@
 custom_data = "cloud_init.txt"
 
+load_balancer_param = {
+  sku             = "basic"
+  probe_protocol  = "Tcp" # probe protocol Http, Https, or Tcp
+  probe_port      = "22"  # probe port. (1 ~ 65535)
+  probe_interval  = "5"   # probe interval in sec
+  probe_num       = "2"   # number of probes
+
+}
+
 services =   {
   0               = {
     name          = "svc-a"
