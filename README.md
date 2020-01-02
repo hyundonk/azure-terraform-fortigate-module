@@ -108,5 +108,21 @@ Declare input variables
 Declare output variables
 
 
+## Register to Fortimanager
+
+To centrallize fortigate instance rule management, fortigate instances can be registerred to Fortimanager.
+
+To register fortigate instances to Fortimanager, add the following lines to ./fortigate/config.txt.
+
+```
+config system central-management
+  set type fortimanager
+  set fmg [Forti-manager-ip-address]
+end
+```
+
+Then when accessing fortimanager web console, you can see that fortigate instances are discovered by fortimanager. To register the discovered fortigate instances, follow steps below.
+
+In upper menu, go to "Add Device", select "Add Model Device" radio button, and enter "Name", "Serial Number", "Device Model", and "Firmware Version". Then the discovered fortigate instance will move to "Managed Fortigate" group. 
 
 ## Tenical Notes
