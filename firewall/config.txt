@@ -60,3 +60,9 @@ end
 config system session-helper
     delete 13
 end
+
+config system central-management
+  set type fortimanager
+  set fmg 10.10.0.138
+end
+
