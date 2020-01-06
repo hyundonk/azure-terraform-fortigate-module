@@ -11,7 +11,7 @@ write_files:
       <!DOCTYPE html>
       <html>
         <head>
-          <title><?php $_SERVER['SERVER_ADDR'] ?></title>
+          <title><?php echo $_SERVER['SERVER_ADDR'] ?></title>
       <style type="text/css">
       h1 {
         font-size: 2em;
@@ -37,7 +37,7 @@ write_files:
       </style>
       </head>
       <body>
-      <h1><?php $_SERVER['SERVER_ADDR'] ?></h1>
+      <h1><?php echo $_SERVER['SERVER_ADDR'] ?></h1>
       <?php
       if (!function_exists('getallheaders')) {
           function getallheaders() {
