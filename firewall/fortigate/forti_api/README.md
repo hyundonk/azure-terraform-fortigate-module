@@ -1,4 +1,4 @@
-##Using Fortigate API to on/off health probe response
+## Using Fortigate API to on/off health probe response
 
 **Running this script:**
 1. install php on a linux (e.g. ubuntu) machine: 
