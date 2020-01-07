@@ -1,0 +1,2 @@
+1	PUT	/api/v2/cmdb/system/probe-response	"{"port":8008,"http-probe-value":"OK","ttl-mode":"retain","mode":"http-probe","security-mode":"none","password":"","timeout":300}"
+2	GET	/api/v2/cmdb/system/probe-response	""
