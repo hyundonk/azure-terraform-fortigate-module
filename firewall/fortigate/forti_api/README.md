@@ -5,7 +5,7 @@
 sudo apt-get -y  install php php-cli php-curl
 
 2. Run below command to enable health probe response
-
+```
 php forti_api.php -ip 10.10.0.69:8443 -id <username> -pw <password> -data probe_on
 
 스크립트 시작!
@@ -48,8 +48,10 @@ php forti_api.php -ip 10.10.0.69:8443 -id <username> -pw <password> -data probe_
   "version":"v6.0.7",
   "build":5412
 }
+```
 
 3. Run below command to disable health probe response
+```
 php forti_api.php -ip 10.10.0.69:8443 -id <username> -pw <password> -data probe_off
 
 스크립트 시작!
@@ -92,3 +94,4 @@ php forti_api.php -ip 10.10.0.69:8443 -id <username> -pw <password> -data probe_
   "version":"v6.0.7",
   "build":5412
 }
+```
