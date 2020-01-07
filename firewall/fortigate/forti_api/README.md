@@ -1,4 +1,5 @@
 ## Using Fortigate API to on/off health probe response
+Written by hjcho@secureone.co.kr
 
 **Running this script:**
 1. install php on a linux (e.g. ubuntu) machine: 
