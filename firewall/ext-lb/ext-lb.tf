@@ -108,7 +108,7 @@ resource "azurerm_lb_rule" "https" {
 
     enable_floating_ip              = true
 	  idle_timeout_in_minutes         = 4
-	  load_distribution               = "Default"
+	  load_distribution               = "SourceIP" # change from "Default" for scaling test
 
 	  disable_outbound_snat           = true
 }
@@ -132,7 +132,7 @@ resource "azurerm_lb_rule" "http" {
 
     enable_floating_ip              = true
 	  idle_timeout_in_minutes         = 4
-	  load_distribution               = "Default"
+	  load_distribution               = "SourceIP" # change from "Default" for scaling test
 
 	  disable_outbound_snat           = true
 }
