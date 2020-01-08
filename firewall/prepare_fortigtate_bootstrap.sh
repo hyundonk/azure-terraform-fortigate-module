@@ -22,6 +22,11 @@ export exist=$(az storage container exists --name  ${container} | jq .exists)
 export configfile="config.txt"
 export license_01_file="license-01.lic"
 export license_02_file="license-02.lic"
+export license_03_file="license-03.lic"
+export license_04_file="license-04.lic"
+export license_05_file="license-05.lic"
+export license_06_file="license-06.lic"
+export license_07_file="license-07.lic"
 
 if [ $exist == "false" ]
 then 
@@ -64,4 +69,54 @@ then
   #license_02_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-02.lic --permissions r --expiry 2022-12-31 --full-uri)
   echo "creating customdata file for 2nd instance..."
   echo -e "{\"config-url\": ${config_url},\n\"license-url\": ${license_02_url}}\n" > customdata-02.txt
+fi
+
+if [ -e $license_03_file ]
+then
+  az storage blob upload --container-name ${container} --name license/license-03.lic --file $license_03_file
+  license_03_url=$(az storage blob url --container-name ${container} --name license/license-03.lic)
+  #echo "creating URL with SAS key for 2nd instance license file.."
+  #license_02_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-02.lic --permissions r --expiry 2022-12-31 --full-uri)
+  echo "creating customdata file for 3rd instance..."
+  echo -e "{\"config-url\": ${config_url},\n\"license-url\": ${license_03_url}}\n" > customdata-03.txt
+fi
+
+if [ -e $license_04_file ]
+then
+  az storage blob upload --container-name ${container} --name license/license-04.lic --file $license_04_file
+  license_04_url=$(az storage blob url --container-name ${container} --name license/license-04.lic)
+  #echo "creating URL with SAS key for 2nd instance license file.."
+  #license_02_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-02.lic --permissions r --expiry 2022-12-31 --full-uri)
+  echo "creating customdata file for 4th instance..."
+  echo -e "{\"config-url\": ${config_url},\n\"license-url\": ${license_04_url}}\n" > customdata-04.txt
+fi
+
+if [ -e $license_05_file ]
+then
+  az storage blob upload --container-name ${container} --name license/license-05.lic --file $license_05_file
+  license_05_url=$(az storage blob url --container-name ${container} --name license/license-05.lic)
+  #echo "creating URL with SAS key for 2nd instance license file.."
+  #license_02_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-02.lic --permissions r --expiry 2022-12-31 --full-uri)
+  echo "creating customdata file for 5th instance..."
+  echo -e "{\"config-url\": ${config_url},\n\"license-url\": ${license_05_url}}\n" > customdata-05.txt
+fi
+
+if [ -e $license_06_file ]
+then
+  az storage blob upload --container-name ${container} --name license/license-06.lic --file $license_06_file
+  license_06_url=$(az storage blob url --container-name ${container} --name license/license-06.lic)
+  #echo "creating URL with SAS key for 2nd instance license file.."
+  #license_02_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-02.lic --permissions r --expiry 2022-12-31 --full-uri)
+  echo "creating customdata file for 6th instance..."
+  echo -e "{\"config-url\": ${config_url},\n\"license-url\": ${license_06_url}}\n" > customdata-06.txt
+fi
+
+if [ -e $license_07_file ]
+then
+  az storage blob upload --container-name ${container} --name license/license-07.lic --file $license_07_file
+  license_07_url=$(az storage blob url --container-name ${container} --name license/license-07.lic)
+  #echo "creating URL with SAS key for 2nd instance license file.."
+  #license_02_url=$(az storage blob generate-sas --account-name ${storage_account_name} --account-key ${access_key} --container-name ${container} --name license/license-02.lic --permissions r --expiry 2022-12-31 --full-uri)
+  echo "creating customdata file for 7th instance..."
+  echo -e "{\"config-url\": ${config_url},\n\"license-url\": ${license_07_url}}\n" > customdata-07.txt
 fi

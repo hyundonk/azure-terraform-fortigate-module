@@ -41,7 +41,23 @@ nsg_rules_table = {
         /* destination address prefix */    "10.10.0.140",
         /* destination address prefixes */  null
       ],
-    ]
+      [
+        /* name */                          "allow_tcp_8000_9000",
+        /* priority */                      "2000", 
+        /* direction */                     "Inbound", 
+        /* action */                        "Allow",
+        /* protocol */                      "Tcp",
+        /* source port range */             "*",
+        /* source port ranges */            null,
+        /* source address prefix */         "*",
+        /* source address prefixes */       null,
+        /* destination port range */        "8000-9000", 
+        /* destination port ranges */       null,
+        /* destination address prefix */    "10.10.0.140",
+        /* destination address prefixes */  null
+      ],
+ 
+   ]
     nsg_outbound  = []
   }
 }

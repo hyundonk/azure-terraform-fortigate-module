@@ -1,12 +1,8 @@
-config system probe-response
-    set port 8008
-    set mode http-probe
-end
-
-config system global
+onfig system global
     set admin-sport 8443
     set admintimeout 30
     set timezone 60
+    set anti-replay disable
 end
 
 config system settings
