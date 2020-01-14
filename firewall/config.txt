@@ -6,7 +6,6 @@ onfig system global
 end
 
 config system settings
-    set inspection-mode proxy
     set firewall-session-dirty check-new
     set default-voip-alg-mode kernel-helper-based
     set gui-load-balance enable
