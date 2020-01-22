@@ -1,0 +1,122 @@
+#cloud-config
+package_upgrade: true
+packages:
+  - apache2
+  - php
+  - php-cli
+  - php-curl
+  - libapache2-mod-php7.0
+write_files:
+  - owner: azureuser:azureuser
+    path: /var/www/html/index.php
+    content: |
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title><?php echo $_SERVER['SERVER_ADDR']; ?></title>
+        <style type="text/css">
+        h1 {
+          font-size: 2em;
+          color: red;
+        }
+        h2 {
+          font-size: 1.5em;
+        }
+        table {
+          border-collapse: collapse;
+          border: solid thin;
+        }
+        tr, td {
+          border: solid thin;
+        }
+        th {
+          width: 150px;
+        }
+        
+        td {
+          width: 600px;
+          padding: 5px;
+        }
+        body {
+          font-size: 0.8em;
+        }
+        </style>
+        </head>
+        <body>
+        
+        <?php
+        echo "<h1>".$_SERVER['SERVER_ADDR']."</h1>";
+        
+        if (!function_exists('getallheaders')) {
+            function getallheaders() {
+                $headers = '';
+                foreach ($_SERVER as $name => $value) {
+                    if (substr($name, 0, 5) == 'HTTP_') {
+                        $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+                    }
+                }
+                return $headers;
+            }
+        }
+        
+        
+        if ($_REQUEST != false) {
+            echo "<h2>HTTP Parameter Dump</h2>";
+            echo "<table>" ;
+            foreach ($_REQUEST as $name => $value) {
+                echo '<tr><th>'.$name.'</th><td>' . $value . '</td></tr>' ;
+            }
+            echo "</table>\n<br>\n" ;
+        }
+        
+        
+        echo "<h2>HTTP Request Header</h2>";
+        echo "<table>" ;
+        foreach (getallheaders() as $name => $value) {
+            echo '<tr><th>'.$name.'</th><td>' . $value . '</td></tr>' ;
+        }
+        echo "</table>" ;
+        
+        
+        echo "<br>\n<h2>IP Connection</h2>";
+        echo "<table>" ;
+        echo '<tr><th>REMOTE_ADDR</th><td>' . $_SERVER['REMOTE_ADDR'] . " : " . $_SERVER['REMOTE_PORT'] . '</td></tr>' ;
+        echo '<tr><th>SERVER_NAME</th><td>' . $_SERVER['SERVER_NAME'] . '</td></tr>' ;
+        echo '<tr><th>SERVER_ADDR</th><td>' . $_SERVER['SERVER_ADDR'] . " : " . $_SERVER['SERVER_PORT'] . '</td></tr>' ;
+        echo "</table>" ;
+        
+        $i = file(sys_get_temp_dir()."/counter.txt");
+        (int)$i[0] = $i[0]+1;
+        echo "<br>page counter : ".$i[0]."<br><br>";
+        if ( $i[0] > 1000 ) $i[0] = 0;
+        $fp = fopen(sys_get_temp_dir()."/counter.txt", "w");
+        fwrite($fp, $i[0]);
+        fclose($fp);
+        
+        /*echo "<table>" ;
+        foreach ($_SERVER as $name => $value) {
+            echo '<tr><th>'.$name.'</th><td>' . $value . '</td></tr>' ;
+        }
+        echo "</table>" ;*/
+        
+        #phpinfo();
+        
+        ?>
+        <?php
+        if ( isset($_GET["t"]) ) {
+                (int)$t=$_GET["t"];
+                #header( 'Content-type: text/html; charset=euc-kr' );
+                echo "after ".$t." sec page loading finish<br><br>";
+                for( $i=1; $i<=$t; $i++ ) {
+                        echo "$i | ";
+                        echo str_pad("", 4096);
+                        ob_flush();
+                        flush();
+                        sleep(1);
+                }
+                echo "<br><br>end<br>";
+        }
+        ?>
+        
+        </body>
+        </html>
