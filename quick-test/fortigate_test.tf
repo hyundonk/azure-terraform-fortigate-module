@@ -1,4 +1,3 @@
-
 resource "azurerm_resource_group" "rg" {
 	name 				= "fortigatetest_rg"
 	location    = "koreacentral"
@@ -39,7 +38,42 @@ resource "azurerm_subnet" "ext" {
 	resource_group_name		    = azurerm_resource_group.rg.name
 	virtual_network_name    	= azurerm_virtual_network.vnet.name
 	address_prefix          	= "10.20.0.0/24"
+
+
 }
+
+resource "azurerm_network_security_group" "ext" {
+	name                  = "nsg-external"
+	location 			        = azurerm_resource_group.rg.location
+	resource_group_name		= azurerm_resource_group.rg.name
+}
+
+resource "azurerm_subnet_network_security_group_association" "ext" {
+  subnet_id                 = "${azurerm_subnet.ext.id}"
+  network_security_group_id = "${azurerm_network_security_group.ext.id}"
+}
+
+resource "azurerm_network_security_rule" "rule" {
+	name                            = "allow-http-https-ssh-in"
+	resource_group_name		          = azurerm_resource_group.rg.name
+	
+	priority                        = "1000"
+	direction                       = "Inbound"
+	access                          = "Allow"
+	protocol                        = "Tcp"
+
+	source_port_range              	= "*"
+	source_port_ranges             	= null
+	destination_port_range          = null
+	destination_port_ranges         = ["80", "443", "22"]
+	source_address_prefix           = "*"
+	source_address_prefixes         = null
+	destination_address_prefix      = "*"
+	destination_address_prefixes    = null
+
+	network_security_group_name     = azurerm_network_security_group.ext.name
+}
+
 
 resource "azurerm_subnet" "int" {
 	name                    	= "internal"
