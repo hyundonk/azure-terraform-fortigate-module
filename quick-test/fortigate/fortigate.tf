@@ -108,7 +108,7 @@ resource "azurerm_virtual_machine" "fw" {
 		computer_name   = format("%s-fw%02d", var.prefix, count.index + 1)
     admin_username  = var.admin_username
     admin_password  = var.admin_password
-    custom_data     = filebase64(format("customdata-%02d.txt", count.index + 1)) # blocked temporary for debugging
+    #custom_data     = filebase64(format("customdata-%02d.txt", count.index + 1)) # blocked temporary for debugging
   }
 
   availability_set_id = azurerm_availability_set.fw.id
