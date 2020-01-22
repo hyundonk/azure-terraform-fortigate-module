@@ -1,4 +1,4 @@
-onfig system global
+config system global
     set admin-sport 8443
     set admintimeout 30
     set timezone 60
