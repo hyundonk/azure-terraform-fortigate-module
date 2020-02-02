@@ -34,11 +34,31 @@ services =   {
   }
 }
 
+route_internet_out = {
+  0             = {
+    name                    = "route-to-internet"
+    address_prefix          = "0.0.0.0/0"
+    next_hop_type           = "VirtualAppliance"
+    next_hop_in_ip_address  = "10.10.0.68"
+  }
+}
+
 services_outbound =   {
   0               = {
     name          = "outbound"
   }
+  1               = {
+    name          = "outbound2"
+  }
 }
+
+int_lb_frontend_ip =   {
+  0               = {
+    name          = "int-lb-frontend-0"
+    ip_address    = "10.10.0.68"
+  }
+}
+
 
 jumpbox_service   =   {
   0               = {
@@ -52,7 +72,7 @@ ext_nic_ip_offset         = 4 # 1st available IP address in the subnet. First 4 
 int_nic_ip_offset         = 5 # 2nd available IP address in the subnet
 
 
-vm_num_fortigate          = 5 # 3
+vm_num_fortigate          = 2 # 3
 vm_size_fortigate         = "Standard_F4s"
 vm_size_fortimanager      = "Standard_D4s_v3"
 vm_size_fortianalyzer     = "Standard_D2s_v3"

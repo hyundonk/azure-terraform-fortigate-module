@@ -28,7 +28,7 @@ variable "vm_size_fortimanager" {
 
 variable "vm_size_fortianalyzer" {}
 
-
+variable "int_lb_frontend_ip" {}
 
 variable "int_lb_frontend_ip_offset" {}
 
@@ -36,16 +36,10 @@ variable "ext_nic_ip_offset"  {
 
 }
 
-variable "int_nic_ip_offset" {
+variable "int_nic_ip_offset" {}
 
-}
+variable "ip_offset_fortimanager" {}
 
-variable "ip_offset_fortimanager" {
+variable "ip_offset_fortianalyzer" {}
 
-}
-
-variable "ip_offset_fortianalyzer" {
-
-}
-
-
+variable "route_internet_out" {}

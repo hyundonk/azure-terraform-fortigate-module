@@ -67,5 +67,13 @@ resource "azurerm_virtual_machine" "fortimanager" {
 
 	network_interface_ids = [azurerm_network_interface.fortimanager.id]
 }
+/* back up test code.
+resource "azurerm_backup_protected_vm" "vm" {
+  resource_group_name = "ebfg-backup"
+  recovery_vault_name = var.recovery_vault_name
 
-
+  source_vm_id        = azurerm_virtual_machine.fortimanager.id
+  #backup_policy_id    = azurerm_backup_policy_vm.example.id
+  backup_policy_id    = "/subscriptions/a9faab7f-03df-43e1-afa5-7ac794c596b6/resourceGroups/ebfg-backup/providers/Microsoft.RecoveryServices/vaults/ebfg-backup-asr-vault-cyg/backupPolicies/TFMamagedDefaultPolicyBackupRetention"
+}
+*/

@@ -60,9 +60,17 @@ resource "azurerm_lb_outbound_rule" "outbound" {
 
 	idle_timeout_in_minutes     = 4
 
+  dynamic "frontend_ip_configuration" {
+    for_each = var.frontend_ip_address_outbound
+    content {
+      name                  = frontend_ip_configuration.value.name
+    }
+  }
+  /*
 	frontend_ip_configuration {
     name = var.frontend_ip_address_outbound[0].name
 	}
+  */
 }
 
 /* 

@@ -1,12 +1,8 @@
-
-output "ext_load_balancer_frontend_ip" {
-  value = {
-    for ip in module.public_ip_address.public_ip:
-       ip.name => ip.ip_address
-  }
-  #value = module.public_ip_address.public_ip
+/*
+output "public_ip" {
+  value = module.public_ip_address.public_ip
 }
-
+*/
 output "ext_load_balancer_frontend_ip_outbound" {
   value = {
     for ip in module.public_ip_address_outbound.public_ip:

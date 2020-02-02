@@ -1,5 +1,6 @@
 provider "azurerm" {
-  version = "<=1.35.0"
+  version = "<=1.41.0" # for azurerm_backup_protected_vm resource
+  #version = "<=1.35.0"
 }
 
 
@@ -44,4 +45,6 @@ locals {
 
     admin_username             = var.fortigate_adminusername
     admin_password             = var.fortigate_adminpassword
+
+    recovery_vault_name        = data.terraform_remote_state.foundation.outputs.recovery_vault_name
 }

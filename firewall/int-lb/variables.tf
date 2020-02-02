@@ -15,8 +15,8 @@ variable "tags" {
   
 }
 
-variable "frontend_ip_address" {
-  description = "internal load balancer frontend IP address"
+variable "frontend_ip_addresses" {
+  description = "internal load balancer frontend IP addresses"
 }
 
 variable "subnet_id" {

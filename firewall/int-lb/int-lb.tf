@@ -7,11 +7,16 @@ resource "azurerm_lb" "intlb" {
 
   sku = "Standard"
     
-  frontend_ip_configuration {
-    name                          = "intlb-frontend-ip"
-    subnet_id                     = var.subnet_id
-		private_ip_address            = var.frontend_ip_address
-    private_ip_address_allocation = "Static"
+  dynamic "frontend_ip_configuration" {
+    for_each = var.frontend_ip_addresses
+    
+    content {
+      name                          = frontend_ip_configuration.value.name
+      #name                          = "intlb-frontend-ip"
+      subnet_id                     = var.subnet_id
+		  private_ip_address            = frontend_ip_configuration.value.ip_address
+      private_ip_address_allocation = "Static"
+    }
   }
 }
 
@@ -35,13 +40,15 @@ resource "azurerm_lb_backend_address_pool" "intlb" {
 
 # configure standard LB HA port rule. Note that HA port rule cannot be co-exist with NAT rule(s)
 resource "azurerm_lb_rule" "ha" {
+    for_each                        = var.frontend_ip_addresses
+
     resource_group_name             = azurerm_lb.intlb.resource_group_name
     loadbalancer_id                 = azurerm_lb.intlb.id
-    name                            = "ha"
+    name                            = "ha-${each.value.name}"
     protocol                        = "All"
     frontend_port                   = 0 
     backend_port                    = 0
-    frontend_ip_configuration_name  = azurerm_lb.intlb.frontend_ip_configuration[0].name
+    frontend_ip_configuration_name  = each.value.name
     #frontend_ip_configuration_name  = "intlb-frontend-ip"
     backend_address_pool_id         = azurerm_lb_backend_address_pool.intlb.id
     probe_id                        = azurerm_lb_probe.probe.id

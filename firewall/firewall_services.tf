@@ -47,7 +47,9 @@ module "external_load_balancer" {
 module "internal_load_balancer" {
   source                            = "./int-lb/"
 
-	frontend_ip_address               = cidrhost(local.subnet_prefix_map["service-fwint"], var.int_lb_frontend_ip_offset)
+	frontend_ip_addresses             = var.int_lb_frontend_ip
+	#frontend_ip_addresses             = [cidrhost(local.subnet_prefix_map["service-fwint"], var.int_lb_frontend_ip_offset)]
+
   subnet_id                         = local.subnet_ids_map["service-fwint"]
 
   prefix                            = local.prefix
@@ -59,13 +61,15 @@ module "internal_load_balancer" {
 module "route_table_to_internal_lb" {
   source                            = "git://github.com/hyundonk/aztf-module-rt.git"
 
-  name                              = "${local.prefix}-route-to-internal-lb"
+  name                              = "${local.prefix}-rt-to-internal-lb"
   location                          = local.location_map["region1"]
   rg                                = local.resource_group_hub_names["resourcegroup_name_firewall"]
 
-  address_prefix                    = "0.0.0.0/0" # Route to Internet
-  next_hop_type                     = "VirtualAppliance"
-	next_hop_in_ip_address            = cidrhost(local.subnet_prefix_map["service-fwint"], var.int_lb_frontend_ip_offset)
+  routes                            = var.route_internet_out
+
+  #address_prefix                    = "0.0.0.0/0" # Route to Internet
+  #next_hop_type                     = "VirtualAppliance"
+	#next_hop_in_ip_address            = cidrhost(local.subnet_prefix_map["service-fwint"], var.int_lb_frontend_ip_offset)
 
   tags                              = local.tags
 }
@@ -95,7 +99,10 @@ module "fortigate" {
   
   extlb_backend_address_pool_id             = module.external_load_balancer.backend_address_pool_id
   extlb_backend_outbound_address_pool_id    = module.external_load_balancer.backend_outbound_address_pool_id
-  intlb_backend_address_pool_id             = module.internal_load_balancer.backend_address_pool_id
+
+  # use internal load balancer in external subnet for temporary to test fortitester
+  intlb_backend_address_pool_id             = module.internal_lb_for_fortitester.backend_address_pool_id
+  #intlb_backend_address_pool_id             = module.internal_load_balancer.backend_address_pool_id
   
   boot_diagnostics_endpoint         = local.diagnostics_map.diags_sa_blob
 }
@@ -118,6 +125,7 @@ module "fortimanager" {
   admin_password                    = local.admin_password
   
   boot_diagnostics_endpoint         = local.diagnostics_map.diags_sa_blob
+  recovery_vault_name               = local.recovery_vault_name
 }
 
 /*

@@ -39,3 +39,7 @@ variable "boot_diagnostics_endpoint" {
   default = null
 }
 
+variable "recovery_vault_name" {
+  default = null
+}
+
