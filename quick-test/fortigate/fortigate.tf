@@ -85,8 +85,8 @@ resource "azurerm_virtual_machine" "fw" {
     publisher = "fortinet" 
     offer     = "fortinet_fortigate-vm_v5"
     sku       = "fortinet_fg-vm"
-    #version   = "6.2.3"
-    version   = "6.0.7"
+    version   = "6.2.3"
+    #version   = "6.0.7"
   }
 
   # plan information required for marketplace images
