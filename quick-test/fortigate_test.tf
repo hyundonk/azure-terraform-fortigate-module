@@ -91,7 +91,6 @@ resource "azurerm_public_ip" "pip" {
   sku                   = "Standard" # Standard Load Balancer requires Standard public IP
 }
 
-
 module "fortigate" {
   source                            = "./fortigate/"
   
@@ -124,5 +123,4 @@ module "fortigate" {
 
   public_ip_id                      = azurerm_public_ip.pip.id
 }
-
 

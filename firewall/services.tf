@@ -23,7 +23,7 @@ module "service1" {
   log_analytics_workspace_key       = null
 
   load_balancer_param              = var.load_balancer_param
-#  route_table_id                    = module.route_table_to_internal_lb.id
+  route_table_id                    = module.route_table_to_internal_lb.id
   custom_data                       = var.custom_data
 }
 
@@ -52,8 +52,7 @@ module "service2" {
   log_analytics_workspace_key       = null
 
   load_balancer_param              = var.load_balancer_param
-#  route_table_id                    = module.route_table_to_internal_lb.id
+  route_table_id                    = module.route_table_to_internal_lb.id
   custom_data                       = var.custom_data
 }
-
 

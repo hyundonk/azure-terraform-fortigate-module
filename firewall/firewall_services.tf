@@ -100,10 +100,6 @@ module "fortigate" {
   extlb_backend_address_pool_id             = module.external_load_balancer.backend_address_pool_id
   extlb_backend_outbound_address_pool_id    = module.external_load_balancer.backend_outbound_address_pool_id
 
-/* Test code. use internal load balancer in external subnet for temporary to test fortitester
-  intlb_backend_address_pool_id             = module.internal_lb_for_fortitester.backend_address_pool_id
-*/
-
   intlb_backend_address_pool_id             = module.internal_load_balancer.backend_address_pool_id
   
   boot_diagnostics_endpoint         = local.diagnostics_map.diags_sa_blob

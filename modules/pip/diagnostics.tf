@@ -15,7 +15,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
   storage_account_id                = var.diagnostics_map.diags_sa
 
   dynamic "log" {
-    for_each = var.diagnostics_settings.log
+    for_each = var.diagnostics_settings  == null ? [] : var.diagnostics_settings.log
     content {
       category    = log.value[0]
       enabled =     log.value[1]
@@ -27,7 +27,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
   }   
 
   dynamic "metric" {
-    for_each = var.diagnostics_settings.metric
+    for_each = var.diagnostics_settings == null ? [] : var.diagnostics_settings.metric
     content {
       category    = metric.value[0]
       enabled =     metric.value[1]
@@ -38,5 +38,4 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
     }
   }
 }  
-
 

@@ -27,11 +27,11 @@ resource "azurerm_network_interface" "nic1" {
 	  private_ip_address                = cidrhost("${var.external_subnet_prefix}", var.ext_nic_ip_offset + count.index) 
 
     # add public IP address to NIC for test only
-	  public_ip_address_id              = var.public_ip_id
+	  #public_ip_address_id              = var.public_ip_id
   }
 
   enable_ip_forwarding = "true" # added for temporary 
-  enable_accelerated_networking       = "true"
+  #enable_accelerated_networking       = "true"
 }
 
 resource "azurerm_network_interface" "nic2" {
@@ -49,7 +49,7 @@ resource "azurerm_network_interface" "nic2" {
   }
 
   enable_ip_forwarding = "true"
-	enable_accelerated_networking = "true"
+	#enable_accelerated_networking = "true"
 }
 
 resource "azurerm_virtual_machine" "fw" {
@@ -108,7 +108,7 @@ resource "azurerm_virtual_machine" "fw" {
 		computer_name   = format("%s-fw%02d", var.prefix, count.index + 1)
     admin_username  = var.admin_username
     admin_password  = var.admin_password
-    #custom_data     = filebase64(format("customdata-%02d.txt", count.index + 1)) # blocked temporary for debugging
+    custom_data     = filebase64(format("customdata-%02d.txt", count.index + 1)) # blocked temporary for debugging
   }
 
   availability_set_id = azurerm_availability_set.fw.id

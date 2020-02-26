@@ -116,6 +116,7 @@ write_files:
                 }
                 echo "<br><br>end<br>";
         }
+        echo gethostname();
         ?>
         
         </body>

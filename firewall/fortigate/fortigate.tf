@@ -1,7 +1,6 @@
 # firewall.tf
 # deploy fortigate VMs and Azure Standard Load Balancers
 #
-
 resource "azurerm_availability_set" "fw" {
 	name                            = format("%s-avset-fw", var.prefix)
   location                        = var.location
@@ -27,33 +26,9 @@ resource "azurerm_network_interface" "nic1" {
 	  private_ip_address                = cidrhost("${var.external_subnet_prefix}", var.ext_nic_ip_offset + count.index) 
   }
 
-/* test code blocked. 
-  # add another ip_configuration block for 2nd fortigate instance for performance test for temporary
-  dynamic "ip_configuration" {
-          for_each = count.index == 1 ? ["IpConfiguration"] : []
-          content {
-            name                              = "ipconfig1"
-            subnet_id                         = var.external_subnet_id
-            private_ip_address_allocation     = "static"
-	          private_ip_address                = "10.10.0.60"
-          }
-  }
-
-  dynamic "ip_configuration" {
-          for_each = count.index == 1 ? ["IpConfiguration"] : []
-          content {
-            name                              = "ipconfig2"
-            subnet_id                         = var.external_subnet_id
-            private_ip_address_allocation     = "static"
-	          private_ip_address                = "10.10.0.61"
-          }
-  }
-
-
-
   enable_ip_forwarding = "true" # added for temporary 
-*/
-  enable_accelerated_networking       = "true"
+  
+  enable_accelerated_networking       = "false" # "true" /* for temporary */
 }
 
 resource "azurerm_network_interface" "nic2" {
@@ -71,7 +46,7 @@ resource "azurerm_network_interface" "nic2" {
   }
 
   enable_ip_forwarding = "true"
-	enable_accelerated_networking = "true"
+  enable_accelerated_networking       = "false" # "true" /* for temporary */
 }
 
 resource "azurerm_virtual_machine" "fw" {
@@ -94,21 +69,11 @@ resource "azurerm_virtual_machine" "fw" {
   delete_os_disk_on_termination = true
   delete_data_disks_on_termination = true
 
-  /* for test only 
- 	storage_image_reference {
-        publisher = "Canonical"
-        offer     = "UbuntuServer"
-        sku       = "16.04.0-LTS"
-        version   = "latest"
-  }
-  */
-
   storage_image_reference { 
     publisher = "fortinet" 
     offer     = "fortinet_fortigate-vm_v5"
     sku       = "fortinet_fg-vm"
-    #version   = "6.2.3"
-    version   = "6.0.7"
+    version   = "6.2.3"
   }
 
   # plan information required for marketplace images
@@ -130,7 +95,7 @@ resource "azurerm_virtual_machine" "fw" {
 		computer_name   = format("%s-fw%02d", var.prefix, count.index + 1)
     admin_username  = var.admin_username
     admin_password  = var.admin_password
-#    custom_data     = filebase64(format("customdata-%02d.txt", count.index + 1)) # blocked temporary for debugging
+    custom_data     = filebase64(format("customdata-%02d.txt", count.index + 1)) # blocked temporary for debugging
   }
 
   availability_set_id = azurerm_availability_set.fw.id
@@ -173,9 +138,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "extlb_out
 resource "azurerm_network_interface_backend_address_pool_association" "intlb" {
 	count = var.vm_num
 
-  # for temporary apply associate backend address pool with nic1 (external subnet) to test with fortitester	
-  network_interface_id    = element(azurerm_network_interface.nic1.*.id, count.index)
-  #network_interface_id    = element(azurerm_network_interface.nic2.*.id, count.index)
+  network_interface_id    = element(azurerm_network_interface.nic2.*.id, count.index)
 	ip_configuration_name = "ipconfig0"
 	backend_address_pool_id = var.intlb_backend_address_pool_id
 }
